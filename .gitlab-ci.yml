@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+
+build-job:
+  stage: build
+  tags:
+    - test_pipline_vbd_runner
+  script:
+    - docker build -t streamlit-pipeline-vbd-test .
+  only:
+    - test-server
+  when: manual
+
+deploy-job:
+  stage: deploy
+  tags:
+    - test_pipline_vbd_runner
+  script:
+    - docker-compose up -d
+  only:
+    - test-server
+  when: manual
